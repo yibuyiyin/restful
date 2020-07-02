@@ -19,7 +19,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource({ "classpath:persistence-mysql.properties" })
 public class PersistenceConfig {
     @Autowired
     private Environment env;

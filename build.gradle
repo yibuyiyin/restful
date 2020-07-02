@@ -16,6 +16,8 @@ configurations {
 }
 
 repositories {
+//    mavenLocal()
+    maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     mavenCentral()
 }
 
@@ -28,14 +30,36 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    implementation "redis.clients:jedis:3.2.0"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    implementation "org.springframework.session:spring-session-data-redis"
+
+    implementation "com.alibaba:fastjson:1.2.71"
+
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1"
+    implementation "com.baomidou:mybatis-plus-boot-starter:3.3.1"
+    implementation "com.baomidou:mybatis-plus-generator:3.3.1"
+
+    implementation "commons-codec:commons-codec:1.13"
+    implementation "org.apache.commons:commons-lang3:3.9"
+    implementation "org.apache.commons:commons-pool2:2.8.0"
+    implementation "org.apache.commons:commons-compress:1.20"
+    implementation "org.apache.poi:poi:4.1.2"
+    implementation "org.apache.poi:poi-ooxml:4.1.2"
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "org.junit.vintage", module: "junit-vintage-engine"
     }
+    testImplementation('junit:junit:4.13')
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
