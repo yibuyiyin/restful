@@ -1,8 +1,10 @@
 package com.yibuyiyin.restful.controller;
 
+import com.yibuyiyin.restful.library.data.DemoData;
 import com.yibuyiyin.restful.model.common.ResultModel;
 import com.yibuyiyin.restful.model.vo.demo.DemoVO;
 import lombok.var;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -13,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/demo")
 @RestController
 public class DemoController {
+
+    @Autowired
+    private DemoData demoData;
+
     /**
      * 查询详情
      *
@@ -20,8 +26,14 @@ public class DemoController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResultModel get(@PathVariable Integer id) {
-        var ret = new ResultModel();
+    public ResultModel<DemoVO> get(@PathVariable Integer id) {
+        var ret = new ResultModel<DemoVO>();
+        try {
+            var data = demoData.getInfoById(id);
+            ret.setData(data);
+        } catch (Exception e) {
+            ret.failure(e);
+        }
         return ret;
     }
 
@@ -32,8 +44,15 @@ public class DemoController {
      * @return
      */
     @PostMapping("/")
-    public Boolean add(@RequestBody DemoVO vo) {
-        return true;
+    public ResultModel<Boolean> add(@RequestBody DemoVO vo) {
+        var ret = new ResultModel<Boolean>();
+        try {
+            var demoId = demoData.addInfo(vo);
+            ret.setData(demoId);
+        } catch (Exception e) {
+            ret.failure(e);
+        }
+        return ret;
     }
 
     /**
@@ -44,8 +63,17 @@ public class DemoController {
      * @return
      */
     @PutMapping("/{id}")
-    public Integer update(@PathVariable Integer id, @RequestBody DemoVO vo) {
-        return 1;
+    public ResultModel<Boolean> update(@PathVariable Integer id, @RequestBody DemoVO vo) {
+        var ret = new ResultModel<Boolean>();
+        try {
+            var isRet = demoData.updateInfoById(id, vo);
+            if (!isRet) {
+               ret.failure("DEMO更新失败");
+            }
+        } catch (Exception e) {
+            ret.failure(e);
+        }
+        return ret;
     }
 
     /**
@@ -55,7 +83,16 @@ public class DemoController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public Boolean delete(@PathVariable Integer id) {
-        return true;
+    public ResultModel<Boolean> delete(@PathVariable Integer id) {
+        var ret = new ResultModel<Boolean>();
+        try {
+            var isRet = demoData.deleteInfoById(id);
+            if (!isRet) {
+                ret.failure("DEMO删除失败");
+            }
+        } catch (Exception e) {
+            ret.failure(e);
+        }
+        return ret;
     }
 }

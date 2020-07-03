@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author peng.yu
  */
-public class ResultModel implements Serializable {
+public class ResultModel<T> implements Serializable {
 
     private static final long serialVersionUID = -4981931472107313393L;
 
