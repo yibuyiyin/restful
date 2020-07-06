@@ -22,6 +22,10 @@ public enum ErrorInfo {
 		this.errorMessage = errorMessage;
 	}
 
+	public String getErrorName() {
+		return this.name();
+    }
+
 	public Integer getErrorCode() {
 		return this.errorCode;
 	}

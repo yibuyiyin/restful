@@ -1,8 +1,11 @@
 package com.yibuyiyin.restful.model.common;
 
+import com.yibuyiyin.restful.enums.common.ErrorInfo;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
 
@@ -17,48 +20,57 @@ public class ResultModel<T> implements Serializable {
 
     @Getter
     @Setter
-    private Integer retcode;
+    private HttpStatus status;
 
     @Getter
     @Setter
-    private String msg;
+    private Integer errorCode;
+
+    @Getter
+    @Setter
+    private String message;
 
     @Getter
     @Setter
     private Object data;
 
     public ResultModel() {
-        this.setMsg("success");
-        this.setRetcode(2000000);
+        this.setMessage("success");
+        this.setErrorCode(0);
+        this.setStatus(HttpStatus.OK);
     }
 
     public void failure(Throwable e) {
-        this.setRetcode(0);
-        if (e != null) {
-            this.setMsg(e.getMessage());
-        } else {
-            this.setMsg("failure");
-        }
+//        this.setRetcode(1);
+//        if (e != null) {
+//            this.setMsg(e.getMessage());
+//        } else {
+//            this.setMsg("failure");
+//        }
     }
 
-    public void failure(String errMessage) {
-        this.setRetcode(0);
-        if (StringUtils.isNotBlank(errMessage)) {
-            this.setMsg(errMessage);
-        } else {
-            this.setMsg("failure");
-        }
+    /**
+     * 返回错误提示
+     *
+     * @param errorInfo
+     */
+    public void failure(ErrorInfo errorInfo) {
+        this.setStatus(HttpStatus.BAD_REQUEST);
+        this.setErrorCode(errorInfo.getErrorCode());
+        this.setMessage(errorInfo.getErrorMessage());
     }
 
     public void failure() {
-        this.setRetcode(0);
-        this.setMsg("failure");
+    }
+
+    public ResponseEntity response(ResultModel resultModel) {
+        return new ResponseEntity(resultModel, resultModel.getStatus());
     }
 
     public String toString() {
-        return "JsonModel [retcode=" + this.getRetcode()
+        return "JsonModel [retcode=" + this.getErrorCode()
                 + ", data=" + this.getData()
-                + ", msg=" + this.getMsg() + "]";
+                + ", msg=" + this.getMessage() + "]";
     }
 }
 

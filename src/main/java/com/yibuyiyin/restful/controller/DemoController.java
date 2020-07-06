@@ -1,10 +1,15 @@
 package com.yibuyiyin.restful.controller;
 
+import com.yibuyiyin.restful.enums.common.ErrorInfo;
 import com.yibuyiyin.restful.library.data.DemoData;
 import com.yibuyiyin.restful.model.common.ResultModel;
 import com.yibuyiyin.restful.model.vo.demo.DemoVO;
 import lombok.var;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author peng.yu
  */
-@RequestMapping("/demo")
+@RequestMapping(path = "/demo")
 @RestController
 public class DemoController {
 
@@ -44,7 +49,7 @@ public class DemoController {
      * @return
      */
     @PostMapping("/")
-    public ResultModel<Boolean> add(@RequestBody DemoVO vo) {
+    public ResponseEntity<T> add(@RequestBody DemoVO vo) {
         var ret = new ResultModel<Boolean>();
         try {
             var demoId = demoData.addInfo(vo);
@@ -52,7 +57,8 @@ public class DemoController {
         } catch (Exception e) {
             ret.failure(e);
         }
-        return ret;
+//        ret.failure(ErrorInfo.EXPIRE);
+        return ret.response(ret);
     }
 
     /**
@@ -68,7 +74,7 @@ public class DemoController {
         try {
             var isRet = demoData.updateInfoById(id, vo);
             if (!isRet) {
-               ret.failure("DEMO更新失败");
+//               ret.failure("DEMO更新失败");
             }
         } catch (Exception e) {
             ret.failure(e);
@@ -88,7 +94,7 @@ public class DemoController {
         try {
             var isRet = demoData.deleteInfoById(id);
             if (!isRet) {
-                ret.failure("DEMO删除失败");
+//                ret.failure("DEMO删除失败");
             }
         } catch (Exception e) {
             ret.failure(e);

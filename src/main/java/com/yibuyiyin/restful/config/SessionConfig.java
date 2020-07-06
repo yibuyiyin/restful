@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.yibuyiyin.restful.model.common.ResultModel;
 import lombok.var;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -41,7 +42,7 @@ class SessionCofig implements WebMvcConfigurer {
                 return true;
             }
             var ret = new ResultModel();
-            ret.setRetcode(401);
+            ret.setStatus(HttpStatus.UNAUTHORIZED);
             ret.failure();
             response.getWriter().write(JSON.toJSONString(ret));
             return false;

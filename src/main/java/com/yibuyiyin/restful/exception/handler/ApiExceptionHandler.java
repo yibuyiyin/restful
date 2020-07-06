@@ -71,8 +71,8 @@ public class ApiExceptionHandler {
 		} else {
 			message = e.getMessage();
 		}
-		resultModel.setRetcode(Integer.valueOf(getErrorCode(message)));
-		resultModel.setMsg(message);
+//		resultModel.setRetcode(Integer.valueOf(getErrorCode(message)));
+//		resultModel.setMsg(message);
 		return resultModel;
 	}
 

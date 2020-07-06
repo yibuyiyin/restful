@@ -81,6 +81,7 @@ NONSTOP*)
 esac
 
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ]; then
