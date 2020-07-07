@@ -6,8 +6,10 @@ import com.yibuyiyin.restful.library.dao.db.entity.Demo;
 import com.yibuyiyin.restful.library.dao.db.mapper.DemoMapper;
 import com.yibuyiyin.restful.library.dao.redis.DemoQueue;
 import com.yibuyiyin.restful.model.vo.demo.DemoVO;
+import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Component;
@@ -74,7 +76,6 @@ public class DemoData {
         final BeanCopier copier = BeanCopier.create(DemoVO.class, Demo.class, false);
         copier.copy(vo, demo, null);
         demo.setId(id);
-        System.out.println(demo);
         return demoMapper.updateById(demo) > 0;
     }
 
@@ -87,6 +88,9 @@ public class DemoData {
     public DemoVO getInfoById(Integer id) {
         var demoVO = new DemoVO();
         var demo = demoMapper.selectById(id);
+        if (demo == null) {
+            return null;
+        }
         final BeanCopier copier = BeanCopier.create(Demo.class, DemoVO.class, false);
         copier.copy(demo, demoVO, null);
         return demoVO;

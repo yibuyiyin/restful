@@ -1,6 +1,7 @@
 package com.yibuyiyin.restful.config;
 
 import com.alibaba.fastjson.JSON;
+import com.yibuyiyin.restful.enums.common.error.ErrorInfo;
 import com.yibuyiyin.restful.model.common.ResultModel;
 import lombok.var;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +44,7 @@ class SessionCofig implements WebMvcConfigurer {
             }
             var ret = new ResultModel();
             ret.setStatus(HttpStatus.UNAUTHORIZED);
-            ret.failure();
+            ret.failure(ErrorInfo.UNAUTHORIZED);
             response.getWriter().write(JSON.toJSONString(ret));
             return false;
         }
