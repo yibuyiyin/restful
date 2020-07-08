@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author peng.yu
  */
-public class ResultModel<T> implements Serializable {
+public class ResultModel implements Serializable {
 
     private static final long serialVersionUID = -4981931472107313393L;
 
@@ -43,6 +43,13 @@ public class ResultModel<T> implements Serializable {
     private List<Map<String, String>> errorList;
 
     public ResultModel() {
+        this.success();
+    }
+
+    /**
+     * 设置成功信息
+     */
+    public void success() {
         this.setMessage("success");
         this.setErrorCode(0);
         this.setStatus(HttpStatus.OK);
